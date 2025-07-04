@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monograph Dashboard - Powerful Insights Into Your Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Barlow:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: hsl(0, 100%, 68%);
+            --very-dark-blue: hsl(230, 29%, 20%);
+            --dark-grayish-blue: hsl(230, 11%, 40%);
+            --grayish-blue: hsl(231, 7%, 65%);
+            --light-grayish-blue: hsl(207, 33%, 95%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            background: linear-gradient(135deg, var(--light-grayish-blue) 0%, #f0f4f8 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 1000;
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: var(--very-dark-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: rotate(45deg) scale(1.1);
+        }
+
+        .logo::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            transform: rotate(-45deg);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--very-dark-blue);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--red);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .login-link {
+            color: var(--grayish-blue) !important;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--very-dark-blue);
+            transition: 0.3s;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--very-dark-blue);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 30px;
+            cursor: pointer;
+            color: var(--very-dark-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 108, 108, 0.1), transparent);
+            transform: rotate(15deg);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotate(15deg) translateY(0px); }
+            50% { transform: rotate(15deg) translateY(-20px); }
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-text {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .new-badge {
+            display: inline-block;
+            background: var(--very-dark-blue);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .product-label {
+            color: var(--grayish-blue);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            color: var(--very-dark-blue);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            color: var(--dark-grayish-blue);
+            margin-bottom: 40px;
+            font-size: 18px;
+            max-width: 400px;
+        }
+
+        .cta-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cta-button {
+            background: var(--red);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 30px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 108, 108, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 108, 108, 0.4);
+        }
+
+        .preview-link {
+            color: var(--grayish-blue);
+            text-decoration: none;
+            font-family: 'Barlow Condensed', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .preview-link:hover {
+            color: var(--dark-grayish-blue);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: slideInRight 1s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .dashboard-mockup {
+            position: relative;
+            transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-mockup:hover {
+            transform: perspective(1000px) rotateY(-2deg) rotateX(2deg) scale(1.02);
+        }
+
+        .phone-mockup {
+            position: absolute;
+            left: -100px;
+            top: 50%;
+            transform: translateY(-50%) perspective(800px) rotateY(15deg);
+            z-index: 20;
+            transition: transform 0.3s ease;
+        }
+
+        .phone-mockup:hover {
+            transform: translateY(-50%) perspective(800px) rotateY(10deg) scale(1.05);
+        }
+
+        .phone {
+            width: 180px;
+            height: 360px;
+            background: #2c3e50;
+            border-radius: 25px;
+            padding: 20px 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .laptop {
+            width: 500px;
+            height: 320px;
+            background: #2c3e50;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .laptop-screen {
+            width: 100%;
+            height: 85%;
+            background: white;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .laptop-base {
+            height: 15%;
+            background: #34495e;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .dashboard-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.1;
+        }
+
+        .data-bars {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+        }
+
+        .bar {
+            height: 8px;
+            background: var(--red);
+            margin: 6px 0;
+            border-radius: 4px;
+            animation: growBar 2s ease-out infinite;
+        }
+
+        .bar:nth-child(1) { width: 80%; animation-delay: 0s; }
+        .bar:nth-child(2) { width: 60%; animation-delay: 0.2s; }
+        .bar:nth-child(3) { width: 90%; animation-delay: 0.4s; }
+        .bar:nth-child(4) { width: 45%; animation-delay: 0.6s; }
+
+        @keyframes growBar {
+            0% { width: 0; }
+            50% { width: var(--bar-width, 50%); }
+            100% { width: var(--bar-width, 50%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 60px 0 80px;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .phone-mockup {
+                position: static;
+                transform: none;
+                margin-bottom: 20px;
+            }
+
+            .phone {
+                width: 150px;
+                height: 300px;
+                margin: 0 auto;
+            }
+
+            .laptop {
+                width: 280px;
+                height: 180px;
+                margin: 0 auto;
+            }
+
+            .dashboard-mockup {
+                transform: none;
+            }
+
+            .cta-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .laptop {
+                width: 240px;
+                height: 150px;
+            }
+
+            .phone {
+                width: 120px;
+                height: 240px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <img src="images/logo.svg" alt="">
+            
+            <ul class="nav-links">
+                <li><a href="#product">Product</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#login" class="login-link">Login</a></li>
+            </ul>
+
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-menu" onclick="toggleMobileMenu()">&times;</div>
+        <a href="#product">Product</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#login">Login</a>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="new-badge">New</div>
+                        <div class="product-label">Monograph Dashboard</div>
+                        <h1>Powerful Insights Into Your Team</h1>
+                        <p>Project planning and time tracking for agile teams</p>
+                        <div class="cta-container">
+                            <a href="#demo" class="cta-button">Schedule a Demo</a>
+                            <a href="#preview" class="preview-link">to see a preview</a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="phone-mockup">
+                            <div class="phone">
+                                <div class="phone-screen">
+                                    <div class="dashboard-content"></div>
+                                    <div class="data-bars">
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-mockup">
+                            <div class="laptop">
+                                <div class="laptop-screen">
+                                    <div class="dashboard-content"></div>
+                                    <div class="data-bars">
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                        <div class="bar"></div>
+                                    </div>
+                                </div>
+                                <div class="laptop-base"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.remove('active');
+            });
+        });
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add parallax effect to hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.querySelector('.hero::before');
+            if (heroBackground) {
+                const speed = scrolled * 0.5;
+                heroBackground.style.transform = `rotate(15deg) translateY(${speed}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
