@@ -4,19 +4,17 @@ This is a solution to the [Project tracking intro component challenge on Fronten
 
 ## Table of contents
 
-- [Frontend Mentor - Project tracking intro component solution](#frontend-mentor---project-tracking-intro-component-solution)
-  - [Table of contents](#table-of-contents)
-  - [Overview](#overview)
-    - [The challenge](#the-challenge)
-    - [Screenshot](#screenshot)
-    - [Links](#links)
-  - [My process](#my-process)
-    - [Built with](#built-with)
-    - [What I learned](#what-i-learned)
-    - [Continued development](#continued-development)
-    - [Useful resources](#useful-resources)
-  - [Author](#author)
-  - [Acknowledgments](#acknowledgments)
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
 ## Overview
 
@@ -34,11 +32,14 @@ Users should be able to:
 
 ![](./screenshot.jpg)
 
+Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
+
+Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it.
 
 ### Links
 
-- Solution URL: [Solution](https://github.com/blordeus/project-tracking-intro-component)
-- Live Site URL: [Live Site](https://blordeus.github.io/project-tracking-intro-component/)
+- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
 
 ## My process
 
@@ -57,6 +58,19 @@ Users should be able to:
 This project was an excellent opportunity to practice creating complex layouts with CSS Grid and Flexbox. One of the most challenging aspects was creating the background pattern using pure CSS without relying on image assets.
 
 Here's how I approached the custom background pattern:
+
+```css
+.background-pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+  border-radius: 0 0 0 50px;
+  z-index: -1;
+}
+```
 
 I also implemented smooth mobile navigation with JavaScript:
 
